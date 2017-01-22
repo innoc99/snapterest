@@ -20494,48 +20494,55 @@ module.exports = require('./lib/React');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-// const h1 = React.createElement('h1', {className:'header', key:'header'}, 'This is react');
-var h1 = React.createElement(
-    'h1',
-    { className: 'header', key: 'header' },
-    'This is react'
-);
-var p = React.createElement(
-    'p',
-    { className: 'content', key: 'content' },
-    'And that\'s how it works.'
-);
+// const h1 = <h1 className="header" key="header">This is react</h1>;
+// const p = <p className="content" key='content'>And that's how it works.</p>;
+//
+// const listOfItems = <ul className="list-of-items">
+//     <li className="item-1">Item 1</li>
+//     <li className="item-2">Item 2</li>
+//     <li className="item-3">Item 3</li>
+//     <li className="item-4">Item 4</li>
+// </ul>;
+//
+// const reactFragment = [h1,p,listOfItems];
+// const section = React.createElement('section', {className:'container'}, reactFragment);
+// ReactDOM.render(section, document.getElementById('react-application'));
 
-var listOfItems = React.createElement(
-    'ul',
-    { className: 'list-of-items' },
-    React.createElement(
-        'li',
-        { className: 'item-1' },
-        'Item 1'
-    ),
-    React.createElement(
-        'li',
-        { className: 'item-2' },
-        'Item 2'
-    ),
-    React.createElement(
-        'li',
-        { className: 'item-3' },
-        'Item 3'
-    ),
-    React.createElement(
-        'li',
-        { className: 'item-4' },
-        'Item 4'
-    )
-);
+var ReactClass = React.createClass({
+    displayName: 'ReactClass',
 
-var reactFragment = [h1, p, listOfItems];
-var section = React.createElement('section', { className: 'container' }, reactFragment);
+    getInitialState: function getInitialState() {
+        return {
+            isHeaderHidden: false,
+            title: 'Stateful React Component'
+        };
+    },
+    handleClick: function handleClick() {
+        this.setState({
+            isHeaderHidden: !this.state.isHeaderHidden
+        });
+    },
 
-ReactDOM.render(section, document.getElementById('reactapplication'));
+    render: function render() {
+        // this.props.isHidden = true;
+        // this.props.tweets = [];
+        // if(this.state.isHidden){
+        //     return null;
+        // }
+        var headerElement = React.createElement('h1', { className: 'header', key: 'header' }, this.state.title);
+        var buttonElement = React.createElement('button', { className: 'btn btn-default btn-sm', onClick: this.handleClick, key: 'button' }, 'Toggle Header');
+
+        if (this.state.isHeaderHidden) {
+            return React.createElement('div', null, [buttonElement]);
+        }
+
+        return React.createElement('div', null, [buttonElement, headerElement]);
+    }
+});
+var reactComponentElement = React.createElement(ReactClass);
+var reactComponent = ReactDOM.render(reactComponentElement, document.getElementById('react-application'));
 
 console.log("test");
+console.log(reactComponent);
 
 },{"react":178,"react-dom":25}]},{},[179]);
