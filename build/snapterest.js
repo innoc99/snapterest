@@ -20494,8 +20494,47 @@ module.exports = require('./lib/React');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var reactElement = React.createElement('h1', { className: 'header' }, 'This is react');
-ReactDOM.render(reactElement, document.getElementById('reactapplication'));
+// const h1 = React.createElement('h1', {className:'header', key:'header'}, 'This is react');
+var h1 = React.createElement(
+    'h1',
+    { className: 'header', key: 'header' },
+    'This is react'
+);
+var p = React.createElement(
+    'p',
+    { className: 'content', key: 'content' },
+    'And that\'s how it works.'
+);
+
+var listOfItems = React.createElement(
+    'ul',
+    { className: 'list-of-items' },
+    React.createElement(
+        'li',
+        { className: 'item-1' },
+        'Item 1'
+    ),
+    React.createElement(
+        'li',
+        { className: 'item-2' },
+        'Item 2'
+    ),
+    React.createElement(
+        'li',
+        { className: 'item-3' },
+        'Item 3'
+    ),
+    React.createElement(
+        'li',
+        { className: 'item-4' },
+        'Item 4'
+    )
+);
+
+var reactFragment = [h1, p, listOfItems];
+var section = React.createElement('section', { className: 'container' }, reactFragment);
+
+ReactDOM.render(section, document.getElementById('reactapplication'));
 
 console.log("test");
 
